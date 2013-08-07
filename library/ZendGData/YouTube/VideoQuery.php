@@ -52,6 +52,9 @@ class VideoQuery extends \ZendGData\Query
         case 'recently featured':
             $this->_url = YouTube::STANDARD_RECENTLY_FEATURED_URI;
             break;
+        case 'on the web':
+            $this->_url = YouTube::STANDARD_ON_THE_WEB_URI;
+            break;
         case 'mobile':
             $this->_url = YouTube::STANDARD_WATCH_ON_MOBILE_URI;
             break;

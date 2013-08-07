@@ -31,6 +31,7 @@ class YouTube extends Media
     const STANDARD_MOST_VIEWED_URI = 'https://gdata.youtube.com/feeds/api/standardfeeds/most_viewed';
     const STANDARD_RECENTLY_FEATURED_URI = 'https://gdata.youtube.com/feeds/api/standardfeeds/recently_featured';
     const STANDARD_WATCH_ON_MOBILE_URI = 'https://gdata.youtube.com/feeds/api/standardfeeds/watch_on_mobile';
+    const STANDARD_ON_THE_WEB_URI = 'https://gdata.youtube.com/feeds/api/standardfeeds/on_the_web';
 
     const STANDARD_TOP_RATED_URI_V2 =
         'https://gdata.youtube.com/feeds/api/standardfeeds/top_rated';
@@ -40,6 +41,8 @@ class YouTube extends Media
         'https://gdata.youtube.com/feeds/api/standardfeeds/recently_featured';
     const STANDARD_WATCH_ON_MOBILE_URI_V2 =
         'https://gdata.youtube.com/feeds/api/standardfeeds/watch_on_mobile';
+    const STANDARD_ON_THE_WEB_URI_V2 = 
+        'https://gdata.youtube.com/feeds/api/standardfeeds/on_the_web';
 
     const USER_URI = 'https://gdata.youtube.com/feeds/api/users';
     const VIDEO_URI = 'https://gdata.youtube.com/feeds/api/videos';
@@ -361,6 +364,40 @@ class YouTube extends Media
             if ($location instanceof YouTube\VideoQuery) {
                 if (!isset($location->url)) {
                     $location->setFeedType('most viewed');
+                }
+            }
+            $uri = $location->getQueryUrl($this->getMajorProtocolVersion());
+        } else {
+            $uri = $location;
+        }
+        return parent::getFeed($uri, '\ZendGData\YouTube\VideoFeed');
+    }
+
+    /**
+     * This feed lists trending videos as seen on YouTube Trends, 
+     * which surfaces popular videos as their popularity is increasing 
+     * and also analyzes broader trends developing within the YouTube community.
+     * https://developers.google.com/youtube/2.0/reference
+     *
+     * @param mixed $location (optional) The URL to query or a
+     *         ZendGData\Query object from which a URL can be determined
+     * @return \ZendGData\YouTube\VideoFeed The feed of videos found at the
+     *         specified URL.
+     */
+    public function getOnTheWebVideoFeed($location = null)
+    {
+        $standardFeedUri = self::STANDARD_ON_THE_WEB_URI;
+
+        if ($this->getMajorProtocolVersion() == 2) {
+            $standardFeedUri = self::STANDARD_ON_THE_WEB_URI_V2;
+        }
+
+        if ($location == null) {
+            $uri = $standardFeedUri;
+        } elseif ($location instanceof Query) {
+            if ($location instanceof YouTube\VideoQuery) {
+                if (!isset($location->url)) {
+                    $location->setFeedType('on the web');
                 }
             }
             $uri = $location->getQueryUrl($this->getMajorProtocolVersion());
