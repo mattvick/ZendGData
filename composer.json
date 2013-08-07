@@ -1,5 +1,5 @@
 {
-    "name": "zendframework/zendgdata",
+    "name": "mattvick/zendgdata",
     "description": "provide programmatic interface to some of Google's online services",
     "type": "library",
     "license": "BSD-3-Clause",
