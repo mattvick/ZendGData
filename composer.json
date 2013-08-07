@@ -27,10 +27,5 @@
     },
     "require-dev": {
         "zendframework/zend-i18n": ">=2.0.0"
-    },
-    "extra": {
-        "branch-alias": {
-            "dev-master": "2.0.x-dev"
-        }
     }
 }
